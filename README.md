@@ -1,6 +1,6 @@
 # Knowledge Agent
 
-一个适合面试展示的 `Java + Spring Boot` 企业知识库 Agent 项目。
+基于 `Java + Spring Boot` 企业知识库 Agent 项目。
 
 它覆盖了一条比较完整的 Agent 主链路：
 - 文档上传与管理

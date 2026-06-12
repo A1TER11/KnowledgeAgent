@@ -1,8 +1,14 @@
 # Knowledge Agent
 
-基于 `Java + Spring Boot` 企业知识库 Agent 项目。
+> 一个面向面试展示与后续扩展的 `Java + Spring Boot` 企业知识库 Agent 项目。
 
-它覆盖了一条比较完整的 Agent 主链路：
+![Java 17](https://img.shields.io/badge/Java-17-2f6fed)
+![Spring Boot 3.3](https://img.shields.io/badge/Spring%20Boot-3.3-6db33f)
+![Storage Memory or PostgreSQL](https://img.shields.io/badge/Storage-Memory%20%7C%20PostgreSQL-444)
+![RAG Hybrid Retrieval](https://img.shields.io/badge/RAG-Hybrid%20Retrieval-c97b21)
+![MCP Remote Tools](https://img.shields.io/badge/MCP-Remote%20Tools-7a52cc)
+
+这个项目不是单纯做一个聊天页面，而是完整演示一条企业知识问答 Agent 主链路：
 - 文档上传与管理
 - RAG 检索
 - 短期记忆与长期记忆
@@ -11,7 +17,16 @@
 - 远程 MCP 工具接入
 - 内置前端工作台
 
-项目定位不是“做一个聊天框”，而是演示一个可扩展的企业知识问答原型。
+## 快速预览
+
+| 维度 | 说明 |
+| --- | --- |
+| 项目目标 | 展示一个可讲清楚、可运行、可扩展的企业知识库 Agent 原型 |
+| 技术定位 | Java 后端项目，不依赖额外前端框架也能完整演示 |
+| 回答依据 | 返回 `knowledgeSnippets`、长期记忆命中和工具调用记录 |
+| 检索策略 | 标题匹配 + 关键词匹配 + 向量检索 + 启发式增强 |
+| 运行模式 | `memory` 快速演示，`postgres` 更贴近真实项目 |
+| 适合场景 | 面试项目讲解、Agent 架构学习、Java AI 应用 Demo |
 
 ## 项目亮点
 
@@ -280,4 +295,3 @@ mvn test
 
 - 仓库中的默认配置已经改为环境变量占位符，不再保留真实 key/token。
 - 如果历史上曾提交过真实密钥，仍然应该去对应平台完成密钥旋转。
-

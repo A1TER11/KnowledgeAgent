@@ -1,0 +1,19 @@
+package com.resume.agent.shared.store;
+
+import com.resume.agent.shared.model.KnowledgeDocument;
+import java.util.List;
+import java.util.Optional;
+
+public interface DocumentStore {
+    KnowledgeDocument save(KnowledgeDocument document);
+
+    List<KnowledgeDocument> findAll();
+
+    Optional<KnowledgeDocument> findById(String documentId);
+
+    List<KnowledgeDocument> searchByEmbedding(List<Double> embedding, int topK, double minScore);
+
+    void deleteById(String documentId);
+
+    boolean existsByTitle(String title);
+}

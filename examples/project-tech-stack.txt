@@ -1,0 +1,30 @@
+# Knowledge Agent Demo 项目技术栈说明
+
+## 一、项目概览
+Knowledge Agent Demo 是一个基于 Java 17 和 Spring Boot 3 构建的企业知识库 Agent 示例项目。项目的核心目标是演示一条完整的 Agent 主链路，覆盖聊天、知识检索、记忆、工具调用、数据存储和前端工作台。
+
+## 二、后端技术栈
+- Java 17
+- Spring Boot 3.3
+- Spring Web
+- Spring Validation
+- Spring JDBC
+- PostgreSQL
+- pgvector
+
+这些技术分别负责运行时语言、应用启动、接口能力、参数校验、数据库访问，以及向量字段存储。
+
+## 三、前端技术栈
+前端没有单独拆分 React 或 Vue 项目，而是直接内嵌在 Spring Boot 中，使用原生 HTML、CSS 和 JavaScript。这样依赖更少、启动更轻，更适合 Demo 演示。
+
+## 四、核心模块设计
+项目主要模块包括：
+- `chat`：处理聊天请求和会话历史查询
+- `docs`：处理知识文档上传、列表、详情、更新和删除
+- `rag`：负责文档切片、向量生成和知识检索
+- `memory`：负责短期记忆和长期记忆
+- `tool`：负责工具调用能力
+- `llm`：负责模型接入和 fallback 策略
+
+## 五、存储模式
+项目支持 `memory` 和 `postgres` 两种存储模式。前者适合快速演示，后者更适合真实项目展示，并支持 `pgvector` 向量字段。

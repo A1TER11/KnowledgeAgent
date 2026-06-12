@@ -1,0 +1,53 @@
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  application:
+    name: knowledge-agent
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  web:
+    locale: zh_CN
+    locale-resolver: fixed
+  messages:
+    encoding: UTF-8
+
+agent:
+  storage:
+    type: postgres
+    postgres:
+      url: ${AGENT_DB_URL:jdbc:postgresql://localhost:5432/knowledge_agent}
+      username: ${AGENT_DB_USERNAME:postgres}
+      password: ${AGENT_DB_PASSWORD:replace-me}
+  memory:
+    short-term-window: 8
+  retrieval:
+    top-k: 3
+    min-score: 0.45
+  llm:
+    base-url: https://api.deepseek.com
+    api-key: ${DEEPSEEK_API_KEY:replace-me}
+    chat-model: deepseek-v4-pro
+    embedding-model: embedding-2
+    embedding-base-url: ${EMBEDDING_BASE_URL:https://open.bigmodel.cn/api/paas/v4}
+    embedding-api-key: ${EMBEDDING_API_KEY:replace-me}
+    remote-chat-enabled: true
+    remote-embedding-enabled: true
+    local-embedding-fallback-enabled: false
+    reasoning-effort: high
+    thinking-enabled: true
+    max-tokens: 1200
+  mcp:
+    enabled: true
+    server-name: github
+    transport: streamable-http
+    endpoint: https://api.githubcopilot.com/mcp/
+    auth-token: ${MCP_SERVER_TOKEN:replace-me}
+    timeout-millis: 15000

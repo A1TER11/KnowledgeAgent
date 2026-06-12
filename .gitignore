@@ -1,0 +1,14 @@
+.idea/
+.m2repo/
+.tmp/
+target/
+
+*.log
+*.out
+*.err
+
+.DS_Store
+Thumbs.db
+
+CODEX-HANDOFF.md
+Java实习岗位知识点学习手册.md

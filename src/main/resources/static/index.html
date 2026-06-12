@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Agent Workbench</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f766e'/%3E%3Cpath d='M18 20h28v6H18zm0 10h28v6H18zm0 10h18v6H18z' fill='white'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<div class="page-shell">
+    <header class="hero">
+        <div class="hero-copy">
+            <p class="eyebrow">Knowledge Agent Demo</p>
+            <h1>把文档、记忆和对话放进同一个工作台。</h1>
+            <p class="hero-text">
+                这里直接连接当前 Spring Boot Agent 服务，方便你管理知识库、追踪命中结果，并验证聊天是否真的用到了已收录文档。
+            </p>
+        </div>
+        <div class="hero-panel">
+            <div class="meta-card meta-card-accent">
+                <span class="meta-label">运行模式</span>
+                <strong id="storageType">加载中</strong>
+                <span id="remoteChatEnabled" class="meta-pill">读取配置中</span>
+            </div>
+            <div class="meta-card">
+                <span class="meta-label">Chat Model</span>
+                <strong id="chatModel">-</strong>
+            </div>
+            <div class="meta-card">
+                <span class="meta-label">Embedding</span>
+                <strong id="embeddingModel">-</strong>
+            </div>
+        </div>
+    </header>
+
+    <main class="workspace">
+        <section class="control-column">
+            <div class="panel">
+                <div class="panel-heading">
+                    <p class="panel-kicker">Session Setup</p>
+                    <h2>演示身份</h2>
+                </div>
+                <form id="identityForm" class="stack-form">
+                    <label>
+                        <span>Session ID</span>
+                        <input id="sessionId" name="sessionId" value="demo-session" maxlength="64">
+                    </label>
+                    <label>
+                        <span>User ID</span>
+                        <input id="userId" name="userId" value="demo-user" maxlength="64">
+                    </label>
+                    <button type="button" id="refreshContextButton" class="secondary-button">刷新上下文</button>
+                </form>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <p class="panel-kicker">Knowledge Base</p>
+                    <h2>知识库管理</h2>
+                </div>
+                <form id="documentForm" class="stack-form">
+                    <input id="documentId" type="hidden">
+                    <label>
+                        <span>文档标题</span>
+                        <input id="documentTitle" name="title" placeholder="例如：员工手册">
+                    </label>
+                    <label>
+                        <span>文档内容</span>
+                        <textarea id="documentContent" name="content" rows="8" placeholder="粘贴会被检索到的知识内容"></textarea>
+                    </label>
+                    <div class="doc-form-actions">
+                        <button type="submit" id="saveDocumentButton" class="primary-button">写入知识库</button>
+                        <button type="button" id="resetDocumentButton" class="ghost-button">清空表单</button>
+                    </div>
+                </form>
+                <div id="documentFeedback" class="feedback" aria-live="polite"></div>
+                <div class="subpanel">
+                    <div class="subpanel-head">
+                        <h3>已收录文档</h3>
+                        <div class="subpanel-actions">
+                            <button type="button" id="reseedExamplesButton" class="ghost-button">重新导入示例</button>
+                            <button type="button" id="reloadDocumentsButton" class="ghost-button">刷新</button>
+                        </div>
+                    </div>
+                    <div id="documentList" class="card-list empty-state">暂无文档。</div>
+                </div>
+                <div class="subpanel">
+                    <div class="subpanel-head">
+                        <h3>文档详情</h3>
+                    </div>
+                    <div id="documentDetail" class="detail-panel empty-state">点击“查看详情”后会在这里展示原文和分块。</div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <p class="panel-kicker">Memory Trace</p>
+                    <h2>长期记忆</h2>
+                </div>
+                <div id="memoryList" class="card-list empty-state">当前用户还没有长期记忆。</div>
+            </div>
+        </section>
+
+        <section class="chat-column">
+            <div class="panel panel-chat">
+                <div class="chat-header">
+                    <div>
+                        <p class="panel-kicker">Conversation</p>
+                        <h2>Agent 对话工作台</h2>
+                    </div>
+                    <button type="button" id="reloadSessionButton" class="ghost-button">刷新会话</button>
+                </div>
+
+                <div id="chatTimeline" class="chat-timeline empty-state">发送第一条消息开始演示。</div>
+
+                <form id="chatForm" class="chat-form">
+                    <textarea id="messageInput" name="message" rows="4" placeholder="例如：根据员工手册，请假怎么申请？"></textarea>
+                    <div class="chat-actions">
+                        <p class="form-hint">建议先写入一份文档，再提具体问题，方便观察知识命中。</p>
+                        <button type="submit" class="primary-button">发送消息</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="panel insight-panel">
+                <div class="panel-heading">
+                    <p class="panel-kicker">Agent Output</p>
+                    <h2>最近一次决策痕迹</h2>
+                </div>
+                <div class="insight-grid">
+                    <div class="insight-block">
+                        <h3>答案</h3>
+                        <div id="answerPreview" class="insight-content empty-state">发送消息后会显示回答。</div>
+                    </div>
+                    <div class="insight-block">
+                        <h3>知识命中</h3>
+                        <div id="knowledgeHits" class="card-list empty-state">暂无命中</div>
+                    </div>
+                    <div class="insight-block">
+                        <h3>长期记忆命中</h3>
+                        <div id="memoryHits" class="card-list empty-state">暂无命中</div>
+                    </div>
+                    <div class="insight-block">
+                        <h3>工具调用</h3>
+                        <div id="toolCalls" class="card-list empty-state">暂无工具调用</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>

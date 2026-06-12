@@ -1,0 +1,23 @@
+# 项目状态周报
+项目名称：Knowledge Agent Demo
+当前阶段：可演示版本
+
+## 已完成
+1. 完成后端聊天接口 `/api/chat`
+2. 完成文档上传接口 `/api/docs/upload`
+3. 完成长记忆接口 `/api/memories/{userId}`
+4. 完成前端工作台首页
+5. 完成 PostgreSQL 模式切换
+
+## 进行中
+1. 优化 RAG 检索命中率
+2. 验证 DeepSeek 远程调用稳定性
+3. 整理 README 和演示脚本
+
+## 待办事项
+1. 给工具调用增加更明显的日志展示
+2. 增加更多测试文档用于演示
+3. 将 `SimpleEmbeddingClient` 替换为真实 embedding 方案
+
+## 风险
+当前机器上的 Maven 环境曾被固定到 Java 8，启动时需确认使用 Java 17。如果数据库未安装 `pgvector`，PostgreSQL 模式将无法正常建立向量表结构。

@@ -1,135 +1,177 @@
 # Knowledge Agent
 
-> 一个面向面试展示与后续扩展的 `Java + Spring Boot` 企业知识库 Agent 项目。
+> 一个面向面试展示的 `LLM + RAG + Agent` 企业知识库智能问答项目。
 
 ![Java 17](https://img.shields.io/badge/Java-17-2f6fed)
 ![Spring Boot 3.3](https://img.shields.io/badge/Spring%20Boot-3.3-6db33f)
-![Storage Memory or PostgreSQL](https://img.shields.io/badge/Storage-Memory%20%7C%20PostgreSQL-444)
+![PostgreSQL + pgvector](https://img.shields.io/badge/PostgreSQL-pgvector-336791)
 ![RAG Hybrid Retrieval](https://img.shields.io/badge/RAG-Hybrid%20Retrieval-c97b21)
-![MCP Remote Tools](https://img.shields.io/badge/MCP-Remote%20Tools-7a52cc)
+![Agent MCP Tools](https://img.shields.io/badge/Agent-MCP%20Tools-7a52cc)
 
-这个项目不是单纯做一个聊天页面，而是完整演示一条企业知识问答 Agent 主链路：
-- 文档上传与管理
-- RAG 检索
-- 短期记忆与长期记忆
-- LLM 对话生成
-- 本地工具调用
-- 远程 MCP 工具接入
-- 内置前端工作台
+## 项目简介
 
-## 快速预览
+这个项目不是简单接一个聊天接口，而是围绕企业知识问答场景，完整实现了一条可运行、可演示、可扩展的 Agent 主链路：
 
-| 维度 | 说明 |
-| --- | --- |
-| 项目目标 | 展示一个可讲清楚、可运行、可扩展的企业知识库 Agent 原型 |
-| 技术定位 | Java 后端项目，不依赖额外前端框架也能完整演示 |
-| 回答依据 | 返回 `knowledgeSnippets`、长期记忆命中和工具调用记录 |
-| 检索策略 | 标题匹配 + 关键词匹配 + 向量检索 + 启发式增强 |
-| 运行模式 | `memory` 快速演示，`postgres` 更贴近真实项目 |
-| 适合场景 | 面试项目讲解、Agent 架构学习、Java AI 应用 Demo |
+- 文档上传与知识库管理
+- 基于 RAG 的知识检索
+- 短期上下文与长期记忆
+- LLM 问答生成
+- 本地工具调用与远程 MCP 工具扩展
+- 前端工作台展示
 
-## 项目亮点
+项目定位是一个适合面试讲解的企业级 Agent 原型，用来展示我在 `Java 后端`、`LLM 应用开发`、`RAG 检索`、`向量存储`、`协议接入` 和 `工程化` 方面的综合能力。
 
-- 混合检索而不只是纯向量检索。当前检索链路结合了标题匹配、关键词匹配、向量检索和少量启发式增强。
-- 回答链路带证据。`/api/chat` 会返回知识片段、长期记忆命中和工具调用结果，便于演示“答案从哪里来”。
-- 有降级策略。远程聊天模型或远程 embedding 不可用时，系统仍能继续工作。
-- 工具链路是可展示的。除了本地工具外，还支持通过 MCP 暴露远程工具能力。
-- 既能快速 demo，也能切到数据库存储。支持 `memory` 与 `postgres` 两种模式。
+## 面试官最值得关注的点
+
+### 1. 不是普通 CRUD，而是 LLM 应用系统
+
+项目围绕 `LLM + RAG + Agent` 架构设计，核心不是表单增删改查，而是如何让模型基于知识、记忆和工具稳定回答问题。
+
+### 2. 做了完整的知识问答链路
+
+从文档上传、切片、向量化、召回，到模型生成、工具调用、结果回填，形成了完整闭环，而不是只做了某一个孤立模块。
+
+### 3. 有真实技术取舍
+
+检索方案没有停留在“纯向量检索”，而是采用混合召回策略，结合标题匹配、关键词匹配、向量检索和启发式增强，提升制度类、知识类问题的召回效果。
+
+### 4. 有可扩展的 Agent 能力
+
+除了本地工具，还实现了基于 `MCP` 的远程工具扩展机制，支持后续接入更多外部能力。
+
+### 5. 有工程化意识
+
+项目包含 fallback 降级方案、测试补充、敏感配置收敛、示例文档和演示工作台，不只是“能跑”，而是“能讲、能演示、能维护”。
 
 ## 技术栈
 
-- Java 17
-- Spring Boot 3.3
-- Spring Web
-- Spring Validation
-- Spring JDBC
-- PostgreSQL
-- pgvector
-- DeepSeek-compatible chat API
-- 自定义 MCP client（支持 JSON 与 SSE 响应解析）
+### 后端
 
-## 核心链路
+- `Java 17`
+- `Spring Boot 3.3`
+- `Spring Web`
+- `Spring Validation`
+- `Spring JDBC`
+
+### 数据与存储
+
+- `PostgreSQL`
+- `pgvector`
+- `memory / postgres` 双存储模式
+
+### LLM / RAG / Agent
+
+- `DeepSeek-compatible Chat API`
+- `Embedding Service`
+- `RAG`
+- 混合检索：标题匹配 + 关键词匹配 + 向量检索 + 启发式增强
+- 短期记忆 / 长期记忆
+- Tool Calling
+- `MCP` 协议接入
+- Fallback 降级策略
+
+### 前端
+
+- `HTML`
+- `CSS`
+- `JavaScript`
+
+## 我独立完成的核心工作
+
+- 独立完成项目需求梳理、技术选型、整体架构设计与模块拆分
+- 独立完成后端核心模块开发，包括文档管理、知识检索、会话管理、长期记忆、工具调用等
+- 独立设计 `PostgreSQL + pgvector` 数据结构，完成知识文档、切片向量、长期记忆等存储建模
+- 独立实现 `LLM + RAG` 知识问答链路，支持文档切片、向量化、召回、模型生成与工具结果回填
+- 独立接入 `DeepSeek` 兼容模型、远程 `Embedding` 服务和 `MCP` 远程工具能力
+- 独立补充单元测试、集成测试、配置安全治理与 README 演示文档
+
+## 核心架构
 
 ```text
-用户问题
+用户提问
   -> 保存会话消息
   -> 查询短期上下文
   -> 检索知识库
   -> 检索长期记忆
   -> 触发记忆抽取
-  -> 调用聊天模型
-      -> 如有需要，调用本地工具 / MCP 工具
+  -> 调用 LLM
+      -> 如有需要，触发本地工具 / MCP 工具
       -> 工具结果回填给模型
-  -> 返回答案 + 证据 + 工具执行记录
+  -> 返回答案 + knowledgeSnippets + longTermMemories + toolCalls
 ```
 
-## 当前能力
+## 核心能力
 
-### 1. 文档侧
+### 1. 文档与知识库管理
 
 - 上传知识文档：`POST /api/docs/upload`
 - 查看文档列表：`GET /api/docs`
 - 查看文档详情：`GET /api/docs/{documentId}`
 - 更新文档：`PUT /api/docs/{documentId}`
 - 删除文档：`DELETE /api/docs/{documentId}`
-- 首次启动时自动导入 `examples` 里的演示文档
+- 启动时自动导入 `examples` 下的演示文档
 
-### 2. 对话侧
+### 2. 智能问答
 
-- 发起聊天：`POST /api/chat`
+- 发起问答：`POST /api/chat`
 - 查看会话：`GET /api/sessions/{sessionId}`
 - 查看长期记忆：`GET /api/memories/{userId}`
 - 查看运行状态：`GET /api/meta`
 
-### 3. Agent 能力侧
+### 3. 检索与记忆
 
-- 短期记忆：基于最近若干轮会话上下文
-- 长期记忆：保存用户偏好、业务事实、任务结果
-- RAG：文档切片、embedding、召回、结果合并
-- 工具调用：本地工具 + MCP 远程工具
-- 回答降级：远程模型不可用时，回退到本地 fallback 回答
+- 文档切片
+- 向量化
+- 混合召回
+- 短期上下文
+- 长期记忆命中
 
-## 目录结构
+### 4. 工具扩展
 
-```text
-src/main/java/com/resume/agent
-  agent      编排层，负责把上下文、知识、记忆、模型串起来
-  chat       聊天接口与应用服务
-  docs       文档上传、详情、更新、删除
-  rag        检索与召回逻辑
-  memory     短期记忆、长期记忆
-  tool       本地工具与 MCP 工具接入
-  llm        聊天模型、embedding、fallback
-  shared     共享模型与存储抽象
-  config     配置与运行状态接口
+- 本地工具调用
+- 远程 MCP 工具接入
+- 工具结果回填给模型继续生成最终答案
 
-src/main/resources/static
-  index.html 工作台页面
-  app.css    页面样式
-  app.js     页面交互
+## 为什么这个项目能体现技术能力
 
-examples
-  演示知识文档
-```
+### LLM 应用能力
 
-## 快速开始
+不仅是调用模型接口，而是把知识检索、上下文管理、工具调用和降级策略整合成完整系统。
 
-### 1. 环境要求
+### RAG 能力
 
-- Java 17
-- Maven 3.9+ 或可用的 Maven 启动环境
-- 可选：PostgreSQL + `pgvector`
+不是只停留在“存向量、查相似度”，而是针对问题类型设计了混合召回与启发式增强策略。
 
-### 2. 必要环境变量
+### 数据库能力
 
-如果要启用远程聊天模型和远程 embedding，请配置：
+结合 `PostgreSQL + pgvector` 完成关系数据与向量数据统一存储，既考虑业务结构，也考虑检索链路。
+
+### 协议与系统扩展能力
+
+实现了自定义 `MCP client`，支持 JSON / SSE 响应解析，为远程工具扩展预留能力。
+
+### 工程能力
+
+项目具备 fallback、测试、配置治理、演示工作台和文档说明，更接近真实项目而不是纯 demo 代码。
+
+## 运行方式
+
+### 环境要求
+
+- `Java 17`
+- `Maven 3.9+`
+- 可选：`PostgreSQL + pgvector`
+
+### 环境变量
+
+如启用远程模型与远程 embedding：
 
 ```powershell
 $env:DEEPSEEK_API_KEY="your-deepseek-key"
 $env:EMBEDDING_API_KEY="your-embedding-key"
 ```
 
-如果使用 PostgreSQL，可以额外配置：
+如启用 PostgreSQL：
 
 ```powershell
 $env:AGENT_DB_URL="jdbc:postgresql://localhost:5432/knowledge_agent"
@@ -137,15 +179,13 @@ $env:AGENT_DB_USERNAME="postgres"
 $env:AGENT_DB_PASSWORD="your-password"
 ```
 
-如果要启用远程 MCP：
+如启用远程 MCP：
 
 ```powershell
 $env:MCP_SERVER_TOKEN="your-mcp-token"
 ```
 
-### 3. 启动方式
-
-通用方式：
+### 启动
 
 ```powershell
 mvn test
@@ -157,141 +197,53 @@ mvn spring-boot:run
 - 工作台：[http://localhost:8080/](http://localhost:8080/)
 - 运行状态：[http://localhost:8080/api/meta](http://localhost:8080/api/meta)
 
-仓库里也提供了 [run-agent.ps1](K:\KnowledgeAgent\run-agent.ps1)，适合当前这台机器的固定 Java/Maven 路径环境；如果你的本机路径不同，建议优先使用上面的通用方式。
-
-## 关键配置
-
-配置文件在 [application.yml](K:\KnowledgeAgent\src\main\resources\application.yml)。
-
-### 切换存储模式
-
-内存模式：
-
-```yaml
-agent:
-  storage:
-    type: memory
-```
-
-PostgreSQL 模式：
-
-```yaml
-agent:
-  storage:
-    type: postgres
-```
-
-### 远程聊天模型
-
-```yaml
-agent:
-  llm:
-    base-url: https://api.deepseek.com
-    api-key: ${DEEPSEEK_API_KEY:replace-me}
-    chat-model: deepseek-v4-pro
-    remote-chat-enabled: true
-```
-
-### 远程 embedding
-
-```yaml
-agent:
-  llm:
-    embedding-base-url: ${EMBEDDING_BASE_URL:https://open.bigmodel.cn/api/paas/v4}
-    embedding-api-key: ${EMBEDDING_API_KEY:replace-me}
-    embedding-model: embedding-2
-    remote-embedding-enabled: true
-```
-
-### MCP 配置
-
-```yaml
-agent:
-  mcp:
-    enabled: true
-    server-name: github
-    transport: streamable-http
-    endpoint: https://api.githubcopilot.com/mcp/
-    auth-token: ${MCP_SERVER_TOKEN:replace-me}
-```
-
-## 示例请求
-
-### 上传文档
-
-```json
-{
-  "title": "员工手册",
-  "content": "公司规定：知识库回答必须优先基于已上传文档，不允许编造。"
-}
-```
-
-### 发起聊天
-
-```json
-{
-  "sessionId": "demo-session",
-  "userId": "demo-user",
-  "message": "这个项目用了什么技术栈？"
-}
-```
-
-### `/api/chat` 返回重点
-
-- `answer`：最终回答
-- `knowledgeSnippets`：命中的知识片段
-- `longTermMemories`：命中的长期记忆
-- `toolCalls`：本轮工具调用详情
-
-这几项很适合在面试演示时解释“为什么模型会这样回答”。
-
 ## 面试演示建议
 
-推荐按下面顺序展示：
+建议按下面顺序讲，最容易让面试官快速理解项目价值：
 
-1. 打开首页，说明这是一个带工作台的企业知识库 Agent Demo。
-2. 先看 `/api/meta`，快速说明当前运行模式、模型与 embedding 状态。
-3. 上传一份文档或直接使用 `examples` 自动导入的数据。
-4. 提问制度类问题，比如“什么时候下班？”“1000 元以上怎么报销审批？”
-5. 展示返回里的 `knowledgeSnippets`，强调回答基于证据。
-6. 发送一条偏好类消息，比如“我喜欢先给结论再解释原因”，再提问，展示长期记忆。
-7. 提问项目类问题，展示工具调用或 MCP 能力。
+1. 先介绍这是一个基于 `LLM + RAG + Agent` 的企业知识库问答系统
+2. 打开 `/api/meta`，说明当前运行模式、模型状态和 embedding 状态
+3. 展示知识文档上传或直接使用 `examples` 自动导入的数据
+4. 提问制度类问题，例如“什么时候下班？”、“1000 元以上报销怎么审批？”
+5. 展示返回里的 `knowledgeSnippets`，说明答案不是编的，而是基于知识库证据
+6. 发送偏好类消息，例如“我喜欢先给结论再解释原因”，再提问，展示长期记忆能力
+7. 继续提问项目类或查询类问题，展示工具调用或 MCP 扩展能力
 
 可直接参考 [examples/demo-prompts.txt](K:\KnowledgeAgent\examples\demo-prompts.txt)。
 
-## 测试
+## 测试与工程化
 
-当前已补上的测试覆盖了几类核心场景：
+当前已覆盖的核心测试场景包括：
 
-- 文档上传后可参与问答
-- 办公时间类问题可命中知识片段
-- 长期记忆可写入并读取
-- 文档详情、更新、删除链路可用
-- fallback 回答行为可验证
-- 配置文件不会再带真实密钥默认值
+- 文档上传后参与问答
+- 办公时间类问题命中知识片段
+- 长期记忆写入与读取
+- 文档详情、更新、删除链路
+- fallback 回答逻辑
+- 配置文件敏感信息占位校验
 
-运行方式：
+运行测试：
 
 ```powershell
 mvn test
 ```
 
-## 已知边界
+## 当前已知边界
 
-- 长期记忆抽取目前还是规则触发，适合 demo，但还不是 LLM memory candidate 提取。
-- MCP client 目前是自定义实现，便于展示工程能力，但要关注后续协议演进风险。
-- 检索目前是“混合召回 + 启发式增强”，对面试展示很友好，但还不是完整的生产级检索方案。
-- 远程接口的超时、重试、观测性还可以继续加强。
+- 长期记忆抽取目前仍以规则触发为主，后续可升级为 LLM memory candidate 提取
+- 检索策略适合演示和原型验证，但仍有继续引入 rerank / query rewrite 的空间
+- MCP client 为自定义实现，能够展示工程能力，但后续需要关注协议演进兼容性
+- 远程模型调用的超时、重试、观测能力仍可继续补强
 
-## 后续可优化方向
+## 后续优化方向
 
-- 把记忆抽取升级为 LLM 驱动的 memory candidate 提取
-- 增加 rerank / query rewrite / BM25
-- 增加文档来源引用与回答出处展示
-- 增加更多 MCP 工具与错误治理测试
-- 补更完整的集成测试和异常场景测试
+- 升级长期记忆提取策略
+- 增加 rerank / BM25 / query rewrite
+- 增加答案出处展示
+- 扩展更多 MCP 工具
+- 增强观测性与异常治理
 
 ## 安全说明
 
-- 仓库中的默认配置已经改为环境变量占位符，不再保留真实 key/token。
-- 如果历史上曾提交过真实密钥，仍然应该去对应平台完成密钥旋转。
+- 仓库默认配置已改为环境变量占位，不保留真实 key / token
+- 如果历史上使用过真实密钥，仍应在对应平台完成密钥旋转

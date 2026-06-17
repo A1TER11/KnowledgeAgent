@@ -1,6 +1,6 @@
 # Knowledge Agent
 
-> 一个面向面试展示的 `LLM + RAG + Agent` 企业知识库智能问答项目。
+> 一个以 `LLM + RAG + Agent` 企业知识库智能问答项目。
 
 ![Java 17](https://img.shields.io/badge/Java-17-2f6fed)
 ![Spring Boot 3.3](https://img.shields.io/badge/Spring%20Boot-3.3-6db33f)
